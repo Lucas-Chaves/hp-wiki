@@ -49,4 +49,7 @@ class HouseEntity {
   static List<TraitsHouseEntity> _traitsHouseEntityFromJsonList(
           Iterable jsonList) =>
       jsonList.map((e) => TraitsHouseEntity.fromJson(e)).toList();
+
+  static List<HouseEntity> listFromJsonHouseEntity(Iterable jsonList) =>
+      jsonList.map((value) => fromJson(value)).toList() as List<HouseEntity>;
 }

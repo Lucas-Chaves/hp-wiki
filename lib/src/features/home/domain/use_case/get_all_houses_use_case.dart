@@ -6,8 +6,8 @@ import 'package:injectable/injectable.dart';
 import '../../../../../core/core.dart';
 import '../../data/data.dart';
 
-abstract class GetAllHousesUseCase<HouseModel, NoParams> {
-  FutureOr<Either<Failure, HouseModel>> call(NoParams params);
+abstract class GetAllHousesUseCase<TResult, TParams> {
+  FutureOr<Either<Failure, TResult>> call(TParams params);
 }
 
 @Injectable(as: GetAllHousesUseCase)

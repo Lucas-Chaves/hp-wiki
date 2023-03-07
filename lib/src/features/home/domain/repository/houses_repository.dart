@@ -6,7 +6,5 @@ import '../../../../../core/core.dart';
 import '../../home.dart';
 
 abstract class HouseRepository {
-  FutureOr<Either<Failure, List<HouseModel>>> fetchAllHouses();
+  FutureOr<Either<DefaultException, List<HouseModel>>> fetchAllHouses();
 }
-
-

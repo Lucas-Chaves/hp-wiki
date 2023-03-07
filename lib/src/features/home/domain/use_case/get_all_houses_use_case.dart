@@ -1,20 +1,24 @@
 import 'dart:async';
 
 import 'package:either_dart/either.dart';
+import 'package:harry_potter_app/src/features/features.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../../core/core.dart';
-import '../../data/data.dart';
 
-abstract class GetAllHousesUseCase<TResult, TParams> {
-  FutureOr<Either<Failure, TResult>> call(TParams params);
+abstract class GetAllHousesUseCase {
+  FutureOr<Either<DefaultException, List<HouseModel>>> call(NoParams params);
 }
 
 @Injectable(as: GetAllHousesUseCase)
-class GetAllHousesUsecaseImpl
-    implements GetAllHousesUseCase<List<HouseModel>, NoParams> {
+class GetAllHousesUsecaseImpl extends GetAllHousesUseCase {
+  GetAllHousesUsecaseImpl(this._houseRepository);
+
+  final HouseRepository _houseRepository;
+
   @override
-  FutureOr<Either<Failure, List<HouseModel>>> call(NoParams params) async {
-    return Left(ServerFailure(errorMessage: 'Teste Error'));
+  FutureOr<Either<DefaultException, List<HouseModel>>> call(
+      NoParams params) async {
+    return _houseRepository.fetchAllHouses();
   }
 }

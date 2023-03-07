@@ -27,20 +27,16 @@ class HouseEntity {
   final String element;
   final String ghost;
   final String commonRoom;
-  @JsonKey(
-    required: true,
-    fromJson: _headsHouseEntityFromJsonList,
-  )
+  @JsonKey(required: true, fromJson: _headsHouseEntityFromJsonList)
   final List<HeadsHouseEntity> heads;
-  @JsonKey(
-    required: true,
-    fromJson: _traitsHouseEntityFromJsonList,
-  )
+  @JsonKey(required: true, fromJson: _traitsHouseEntityFromJsonList)
   final List<TraitsHouseEntity> traits;
 
-  static fromJson(Map<String, dynamic> e) => _$HouseEntityFromJson(e);
+  static HouseEntity fromJson(Map<String, dynamic> e) =>
+      _$HouseEntityFromJson(e);
 
-  static fromEntity(HouseEntity entity) => _$HouseEntityToJson(entity);
+  static Map<String, dynamic> fromEntity(HouseEntity entity) =>
+      _$HouseEntityToJson(entity);
 
   static List<HeadsHouseEntity> _headsHouseEntityFromJsonList(
           Iterable jsonList) =>
@@ -51,5 +47,5 @@ class HouseEntity {
       jsonList.map((e) => TraitsHouseEntity.fromJson(e)).toList();
 
   static List<HouseEntity> listFromJsonHouseEntity(Iterable jsonList) =>
-      jsonList.map((value) => fromJson(value)).toList() as List<HouseEntity>;
+      jsonList.map((value) => fromJson(value)).toList();
 }

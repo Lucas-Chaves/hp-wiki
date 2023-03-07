@@ -19,8 +19,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final GetAllHousesUseCase _getAllHousesUseCase;
 
   FutureOr<void> _init(HomeEventInit event, Emitter<HomeState> emit) async {
-    final value = _getAllHousesUseCase(NoParams.instance);
-    print(value);
     emit(HomeStateLoading());
+    final value = await _getAllHousesUseCase(NoParams.instance);
+    value.fold(
+      (left) => print(left.message),
+      (right) {
+        print(right);
+      },
+    );
+    emit(HomeStateLoaded("asasaas"));
   }
 }

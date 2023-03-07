@@ -13,4 +13,10 @@ class MapperHouse {
         heads: MapperHeadsHouse.fromListHeadsHouseEntityToModel(entity.heads),
         traits: MapperTraitsHouses.fromListEntityToModel(entity.traits),
       );
+
+  static List<HouseModel> fromListHouseEntityToModel(
+          List<HouseEntity> housesEntities) =>
+      housesEntities
+          .map((houseEntity) => fromHouseEntityToModel(houseEntity))
+          .toList();
 }

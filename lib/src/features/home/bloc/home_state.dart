@@ -13,10 +13,14 @@ class HomeStateLoading extends HomeState {
 }
 
 class HomeStateLoaded extends HomeState {
-  HomeStateLoaded(this.response);
+  HomeStateLoaded({
+    required this.houses,
+    required this.filteredHouse,
+  });
 
-  final String response;
+  final List<HouseModel> houses;
+  final HouseModel filteredHouse;
 
   @override
-  List<Object?> get props => [response];
+  List<Object?> get props => [houses, filteredHouse];
 }

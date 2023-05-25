@@ -20,30 +20,46 @@ class HomePage extends StatelessWidget {
               return const Center(child: DefaultLoadingHouses());
             }
             if (state is HomeStateLoaded) {
-              return SingleChildScrollView( 
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset(
-                        'assets/logo/lufa-lufa.png',
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Center(
+                      child: Image.asset(
+                        'assets/logo/${state.filteredHouse.name.toLowerCase()}.png',
                         height: 150,
                         width: 150,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: const [
-                          Text('Gryffindor'),
-                          Text('Scarlet and gold'),
-                          Text('Lion'),
-                        ],
+                    ),
+                    Wrap(
+                      direction: Axis.horizontal,
+                      alignment: WrapAlignment.center,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 10,
+                      children: List<Widget>.generate(
+                        state.houses.length,
+                        (index) => ChoiceChip(
+                          label: Text(state.houses[index].name),
+                          onSelected: (selectedContent) =>
+                              context.read<HomeBloc>().add(
+                                    HomeEventFilter(
+                                        idFilter: state.houses[index].id),
+                                  ),
+                          selected:
+                              state.houses[index].id == state.filteredHouse.id,
+                        ),
                       ),
-                      const Expanded(
-                          child: Icon(Icons.arrow_forward_ios_outlined)),
-                    ],
-                  ),
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: state.filteredHouse.heads.length,
+                      itemBuilder: (context, index) {
+                        return Text(
+                          state.filteredHouse.heads[index].firstName,
+                        );
+                      },
+                    ),
+                  ],
                 ),
               );
             }

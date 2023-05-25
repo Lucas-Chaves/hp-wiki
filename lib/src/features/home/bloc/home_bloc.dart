@@ -15,11 +15,13 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc(
     this._getAllHousesUseCase,
+    this._filterHouseByIdUseCase,
   ) : super(HomeStateInit()) {
     on<HomeEventInit>(_init);
     on<HomeEventFilter>(_filter);
   }
   final GetAllHousesUseCase _getAllHousesUseCase;
+  final FilterHouseByIdUseCase _filterHouseByIdUseCase;
 
   FutureOr<void> _init(HomeEventInit event, Emitter<HomeState> emit) async {
     emit(HomeStateLoading());
@@ -35,14 +37,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
   }
 
-  FutureOr<void> _filter(HomeEventFilter event, Emitter<HomeState> emit) {
+  FutureOr<void> _filter(HomeEventFilter event, Emitter<HomeState> emit) async {
     if (state is HomeStateLoaded) {
       final myState = state as HomeStateLoaded;
-      emit(
-        HomeStateLoaded(
-          houses: myState.houses,
-          filteredHouse:
-              myState.houses.firstWhere((house) => house.id == event.idFilter),
+
+      final filteredHouse = await _filterHouseByIdUseCase(
+        HouseFilterParams(myState.houses, event.idFilter),
+      );
+
+      filteredHouse.fold(
+        (left) => HomeStateError(),
+        (right) => emit(
+          HomeStateLoaded(
+            houses: myState.houses,
+            filteredHouse: right,
+          ),
         ),
       );
     }

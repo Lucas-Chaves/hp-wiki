@@ -12,6 +12,11 @@ class HomeStateLoading extends HomeState {
   List<Object?> get props => [];
 }
 
+class HomeStateError extends HomeState {
+  @override
+  List<Object?> get props => [];
+}
+
 class HomeStateLoaded extends HomeState {
   HomeStateLoaded({
     required this.houses,

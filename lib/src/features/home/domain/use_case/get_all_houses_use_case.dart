@@ -11,7 +11,7 @@ abstract class GetAllHousesUseCase {
 }
 
 @Injectable(as: GetAllHousesUseCase)
-class GetAllHousesUsecaseImpl extends GetAllHousesUseCase {
+class GetAllHousesUsecaseImpl implements GetAllHousesUseCase {
   GetAllHousesUsecaseImpl(this._houseRepository);
 
   final HouseRepository _houseRepository;
